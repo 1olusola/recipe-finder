@@ -1,0 +1,4 @@
+export default function Footer() {
+  return <footer>© 2025 Recipe Finder — Built with ❤️ using React</footer>;
+}
+

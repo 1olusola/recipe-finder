@@ -1,0 +1,4 @@
+.search-input { width:100%; padding:12px 16px; border-radius:10px; border:1px solid var(--color-muted-border); font-size:16px; }
+.results-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:24px; margin-top:8px; }
+.page-btn { background:transparent; border:1px solid var(--color-muted-border); padding:8px 12px; border-radius:8px; }
+

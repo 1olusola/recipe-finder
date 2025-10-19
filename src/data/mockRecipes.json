@@ -1,0 +1,37 @@
+{
+  "results": [
+    {
+      "id": 1001,
+      "title": "3-Ingredient Pasta",
+      "image": "/assets/recipe-1@2x.jpg",
+      "summary": "A quick pasta made with pantry staples. Ready in 15 minutes.",
+      "readyInMinutes": 15,
+      "servings": 2
+    },
+    {
+      "id": 1002,
+      "title": "Spicy Tomato Stew",
+      "image": "/assets/recipe-2@2x.jpg",
+      "summary": "Hearty stew with spices and fresh tomatoes. Perfect for cold evenings.",
+      "readyInMinutes": 30,
+      "servings": 4
+    },
+    {
+      "id": 1003,
+      "title": "Avocado Toast Deluxe",
+      "image": "/assets/recipe-3@2x.jpg",
+      "summary": "Creamy avocado with herbs on toasted bread. Breakfast ready in no time.",
+      "readyInMinutes": 10,
+      "servings": 1
+    },
+    {
+      "id": 1004,
+      "title": "Chicken Stir Fry",
+      "image": "/assets/recipe-4@2x.jpg",
+      "summary": "Quick weeknight dinner with tender chicken and crisp vegetables.",
+      "readyInMinutes": 25,
+      "servings": 3
+    }
+  ]
+}
+
