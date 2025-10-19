@@ -1,30 +1,241 @@
+/* ----------------------------------------------------
+   Global Styles – Recipe Finder App
+   ---------------------------------------------------- */
+
+/* Import CSS Variables (Design Tokens) */
 @import './styles/variables.css';
 
-* { box-sizing: border-box; }
-html, body, #root { height: 100%; }
+/* ----------------------------------------------------
+   CSS Reset & Base Styles
+   ---------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
 body {
   font-family: var(--font-family);
-  background: var(--color-background);
+  background-color: var(--color-background);
   color: var(--color-text-primary);
-  margin: 0;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* layout */
-.app-root { display: flex; flex-direction: column; min-height: 100vh; }
-.main-content { flex: 1; padding-top: 80px; } /* header offset */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 
-/* utility */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ----------------------------------------------------
+   Layout
+   ---------------------------------------------------- */
+.app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-background);
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 80px; /* offset header height */
+}
+
+/* Utility Container */
 .container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 var(--lg);
 }
 
-/* small screens */
+/* ----------------------------------------------------
+   Typography
+   ---------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+p {
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+/* ----------------------------------------------------
+   Buttons
+   ---------------------------------------------------- */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: var(--radius-btn);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid var(--color-muted-border);
+  color: var(--color-text-primary);
+  padding: 8px 16px;
+  border-radius: var(--radius-btn);
+  transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+  background-color: #f8f8f8;
+}
+
+/* ----------------------------------------------------
+   Cards (Global)
+   ---------------------------------------------------- */
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* ----------------------------------------------------
+   Grids
+   ---------------------------------------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--md);
+}
+
+/* ----------------------------------------------------
+   Footer
+   ---------------------------------------------------- */
+footer, .site-footer {
+  background: #FFF3E0;
+  padding: 24px 0;
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  margin-top: var(--xl);
+}
+
+/* ----------------------------------------------------
+   Forms
+   ---------------------------------------------------- */
+input, select, textarea {
+  font-family: inherit;
+  font-size: 16px;
+  border: 1px solid var(--color-muted-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-primary);
+}
+
+/* ----------------------------------------------------
+   Helpers
+   ---------------------------------------------------- */
+.text-center {
+  text-align: center;
+}
+
+.mt-sm { margin-top: var(--sm); }
+.mt-md { margin-top: var(--md); }
+.mt-lg { margin-top: var(--lg); }
+
+.shadow-card { box-shadow: var(--shadow-card); }
+.shadow-lift { box-shadow: var(--shadow-lift); }
+
+.rounded { border-radius: var(--radius-card); }
+
+/* ----------------------------------------------------
+   Loading Spinner (Global Utility)
+   ---------------------------------------------------- */
+.spinner {
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  border: 4px solid #eee;
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ----------------------------------------------------
+   Responsive Layouts
+   ---------------------------------------------------- */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 var(--md);
+  }
+}
+
 @media (max-width: 768px) {
-  .main-content { padding-top: 56px; }
-  .container { padding: 0 var(--sm); }
+  .main-content {
+    padding-top: 56px; /* smaller header on mobile */
+  }
+
+  .container {
+    padding: 0 var(--sm);
+  }
+
+  h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  h2 {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
 }
 
