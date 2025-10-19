@@ -92,7 +92,7 @@ body {
   padding: 80px 10vw;
   display: flex;
   flex-direction: column;
-  padding-top: 60px;
+  padding-top: 90px;
   align-items: center;
   background: linear-gradient(180deg, #fff 0%, #fff8f6 100%);
 }
