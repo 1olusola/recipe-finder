@@ -3,7 +3,7 @@
 A responsive web app built with **React** that allows users to search for recipes, view details, and save favorites. Uses the Spoonacular API with a mock data fallback and session caching.
 
 ## Live demo
-Click Here
+Click Here: recipe-finder-indol-sigma.vercel.app
 
 ## Features
 - Search recipes by ingredients or name (Spoonacular API)
