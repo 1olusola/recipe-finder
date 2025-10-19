@@ -10,7 +10,6 @@ export default function Header() {
         <Link to="/">Home</Link>
         <Link to="/search">Search Recipes</Link>
         <Link to="/favorites">Favorites</Link>
-        <Link to="/about">About</Link>
         <Link to="/search" className="btn-primary">
           Get Started
         </Link>
