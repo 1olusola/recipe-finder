@@ -3,34 +3,122 @@
     {
       "id": 1001,
       "title": "3-Ingredient Pasta",
-      "image": "/assets/recipe-1@2x.jpg",
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
       "summary": "A quick pasta made with pantry staples. Ready in 15 minutes.",
       "readyInMinutes": 15,
-      "servings": 2
+      "servings": 2,
+      "difficulty": "Easy",
+      "cuisine": "Italian"
     },
     {
       "id": 1002,
       "title": "Spicy Tomato Stew",
-      "image": "/assets/recipe-2@2x.jpg",
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
       "summary": "Hearty stew with spices and fresh tomatoes. Perfect for cold evenings.",
       "readyInMinutes": 30,
-      "servings": 4
+      "servings": 4,
+      "difficulty": "Medium",
+      "cuisine": "Nigerian"
     },
     {
       "id": 1003,
       "title": "Avocado Toast Deluxe",
-      "image": "/assets/recipe-3@2x.jpg",
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
       "summary": "Creamy avocado with herbs on toasted bread. Breakfast ready in no time.",
       "readyInMinutes": 10,
-      "servings": 1
+      "servings": 1,
+      "difficulty": "Easy",
+      "cuisine": "American"
     },
     {
       "id": 1004,
       "title": "Chicken Stir Fry",
-      "image": "/assets/recipe-4@2x.jpg",
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
       "summary": "Quick weeknight dinner with tender chicken and crisp vegetables.",
       "readyInMinutes": 25,
-      "servings": 3
+      "servings": 3,
+      "difficulty": "Easy",
+      "cuisine": "Asian"
+    },
+    {
+      "id": 1005,
+      "title": "Beef Tacos",
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
+      "summary": "Spicy beef tacos topped with cheese, lettuce, and salsa.",
+      "readyInMinutes": 20,
+      "servings": 4,
+      "difficulty": "Medium",
+      "cuisine": "Mexican"
+    },
+    {
+      "id": 1006,
+      "title": "Greek Salad Bowl",
+      "image": "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=800&q=80",
+      "summary": "A fresh mix of cucumber, tomato, feta cheese, and olives.",
+      "readyInMinutes": 12,
+      "servings": 2,
+      "difficulty": "Easy",
+      "cuisine": "Greek"
+    },
+    {
+      "id": 1007,
+      "title": "Jollof Rice",
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
+      "summary": "Classic West African rice dish cooked in a rich tomato sauce.",
+      "readyInMinutes": 45,
+      "servings": 5,
+      "difficulty": "Medium",
+      "cuisine": "Nigerian"
+    },
+    {
+      "id": 1008,
+      "title": "Banana Pancakes",
+      "image": "https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=800&q=80",
+      "summary": "Fluffy banana pancakes topped with honey and fruits.",
+      "readyInMinutes": 20,
+      "servings": 2,
+      "difficulty": "Easy",
+      "cuisine": "American"
+    },
+    {
+      "id": 1009,
+      "title": "Vegetable Fried Rice",
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
+      "summary": "Colorful rice dish with stir-fried vegetables and soy sauce.",
+      "readyInMinutes": 25,
+      "servings": 3,
+      "difficulty": "Easy",
+      "cuisine": "Asian"
+    },
+    {
+      "id": 1010,
+      "title": "Shrimp Alfredo",
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
+      "summary": "Creamy alfredo pasta tossed with shrimp and parmesan cheese.",
+      "readyInMinutes": 30,
+      "servings": 2,
+      "difficulty": "Medium",
+      "cuisine": "Italian"
+    },
+    {
+      "id": 1011,
+      "title": "Chocolate Lava Cake",
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
+      "summary": "Decadent molten chocolate cake for dessert lovers.",
+      "readyInMinutes": 25,
+      "servings": 2,
+      "difficulty": "Hard",
+      "cuisine": "French"
+    },
+    {
+      "id": 1012,
+      "title": "Caesar Chicken Wrap",
+      "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
+      "summary": "Grilled chicken wrapped in a tortilla with Caesar dressing.",
+      "readyInMinutes": 15,
+      "servings": 1,
+      "difficulty": "Easy",
+      "cuisine": "American"
     }
   ]
 }

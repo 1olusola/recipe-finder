@@ -1,39 +1,51 @@
-import React, { createContext, useEffect, useState } from "react";
-import { getFavorites as lsGetFavorites, saveFavorite as lsSaveFavorite, removeFavorite as lsRemoveFavorite } from "../utils/localStorage";
+// src/context/FavoritesContext.js
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-export const FavoritesContext = createContext();
+const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(() => {
+    try {
+      const raw = localStorage.getItem("favorites");
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  });
 
   useEffect(() => {
-    setFavorites(lsGetFavorites());
-    // listen to storage events (sync across tabs)
-    const onStorage = (e) => {
-      if (e.key === 'recipe_favorites') {
-        setFavorites(lsGetFavorites());
-      }
-    };
-    window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
-  }, []);
+    try {
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    } catch (e) {
+      console.error("Failed to save favorites", e);
+    }
+  }, [favorites]);
 
-  const addFavorite = (recipe) => {
-    lsSaveFavorite(recipe);
-    setFavorites(lsGetFavorites());
+  const addToFavorites = (recipe) => {
+    setFavorites((prev) => {
+      if (prev.find((r) => r.id === recipe.id)) return prev;
+      return [...prev, recipe];
+    });
   };
 
-  const removeFavorite = (id) => {
-    lsRemoveFavorite(id);
-    setFavorites(lsGetFavorites());
+  const removeFromFavorites = (id) => {
+    setFavorites((prev) => prev.filter((r) => r.id !== id));
   };
 
-  const isFavorite = (id) => favorites.some(r => r.id === id);
+  const isFavorite = (id) => favorites.some((r) => r.id === id);
 
   return (
-    <FavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite, isFavorite }}>
+    <FavoritesContext.Provider
+      value={{ favorites, addToFavorites, removeFromFavorites, isFavorite }}
+    >
       {children}
     </FavoritesContext.Provider>
   );
+};
+
+export const useFavorites = () => {
+  const ctx = useContext(FavoritesContext);
+  if (!ctx) throw new Error("useFavorites must be used within FavoritesProvider");
+  return ctx;
 };
 

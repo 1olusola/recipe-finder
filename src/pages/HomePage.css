@@ -1,8 +1,94 @@
-/* ----------------------------------------------------
-   Home Page Styles – Recipe Finder App
-   ---------------------------------------------------- */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 100px 80px;
+  background: #fafafa;
+}
 
-/* ------------------- Hero Section ------------------- */
+.hero-content {
+  flex: 1;
+}
+
+.hero-content h1 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #212121;
+  margin-bottom: 16px;
+}
+
+.hero-content p {
+  font-size: 18px;
+  color: #757575;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 520px;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: #ff7043;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background: #e85e35;
+}
+
+.hero-image {
+  flex: 1;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 550px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 992px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 80px 40px;
+  }
+
+  .hero-content p {
+    margin: 0 auto 24px;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 56px 16px;
+  }
+
+  .hero-content h1 {
+    font-size: 30px;
+  }
+
+  .hero-content p {
+    font-size: 16px;
+  }
+
+  .btn-primary {
+    font-size: 15px;
+    padding: 10px 20px;
+  }
+}
+
+
 .home-hero {
   background-color: var(--color-background);
   padding: var(--xl) 0 var(--lg);

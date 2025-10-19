@@ -1,61 +1,111 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import SearchBar from "../components/SearchBar/SearchBar";
+import Filters from "../components/Filters/Filters";
+import RecipeCard from "../components/RecipeCard/RecipeCard";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import { searchRecipes } from "../utils/api";
-import RecipeCard from "../components/RecipeCard";
-import LoadingSpinner from "../components/LoadingSpinner";
-import ErrorMessage from "../components/ErrorMessage";
-import useDebounce from "../hooks/useDebounce";
 import "./SearchPage.css";
 
-export default function SearchPage(){
+export default function SearchPage() {
   const [query, setQuery] = useState("");
-  const debounced = useDebounce(query, 300);
+  const [filters, setFilters] = useState({
+    mealType: "",
+    diet: "",
+    cuisine: "",
+  });
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState(null);
-  const [page, setPage] = useState(0);
-  const PAGE_SIZE = 12;
+  const [error, setError] = useState("");
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    // auto-search when debounced query changes
-    if (!debounced) { setRecipes([]); setErr(null); return; }
-    const doSearch = async () => {
-      setLoading(true); setErr(null);
-      try {
-        const results = await searchRecipes(debounced, { number: PAGE_SIZE, offset: page * PAGE_SIZE });
+  // Handle search
+  const handleSearch = async (newQuery, newFilters = filters, reset = true) => {
+    try {
+      setLoading(true);
+      setError("");
+      const results = await searchRecipes(newQuery, newFilters, page);
+      if (reset) {
         setRecipes(results);
-      } catch (e) {
-        setErr(e.message || "Failed to fetch recipes");
-      } finally { setLoading(false); }
-    };
-    doSearch();
-  }, [debounced, page]);
+      } else {
+        setRecipes((prev) => [...prev, ...results]);
+      }
+      setHasMore(results.length > 0);
+    } catch (err) {
+      setError("Unable to load recipes. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle “Load More”
+  const loadMore = async () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    await handleSearch(query, filters, false);
+  };
+
+  // Auto-fetch cached results if available
+  useEffect(() => {
+    const cached = sessionStorage.getItem("lastSearch");
+    if (cached) {
+      const { query, results } = JSON.parse(cached);
+      setQuery(query);
+      setRecipes(results);
+    }
+  }, []);
+
+  // Save results to cache
+  useEffect(() => {
+    if (recipes.length > 0) {
+      sessionStorage.setItem("lastSearch", JSON.stringify({ query, results: recipes }));
+    }
+  }, [recipes, query]);
 
   return (
-    <div className="container">
-      <div style={{margin:'24px 0'}}>
-        <input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="Search by ingredients or recipe name, e.g., chicken, tomato" className="search-input" />
-      </div>
+    <>
+      <main className="search-page">
+        <section className="search-hero">
+          <h1>Find Delicious Recipes 🍳</h1>
+          <p>Search by ingredient, meal type, or dietary preference.</p>
+          <SearchBar onSearch={handleSearch} />
+        </section>
 
-      {loading && <LoadingSpinner />}
+        <section className="search-content">
+          <aside className="filters-column">
+            <Filters filters={filters} setFilters={setFilters} />
+          </aside>
 
-      {err && <ErrorMessage message={err} onRetry={() => { setPage(0); setQuery(debounced); }} />}
+          <div className="results-column">
+            {loading && <LoadingSpinner />}
+            {error && <p className="error-message">{error}</p>}
 
-      {!loading && !err && recipes.length === 0 && debounced && (
-        <div style={{padding:24}}>No recipes found for "{debounced}". Try another search.</div>
-      )}
+            {!loading && recipes.length === 0 && (
+              <div className="empty-state">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/3480/3480475.png"
+                  alt="Empty search results"
+                />
+                <h2>No recipes found</h2>
+                <p>Try a different search keyword or filter.</p>
+              </div>
+            )}
 
-      <div className="results-grid">
-        {recipes.map(r => <RecipeCard key={r.id} recipe={r} />)}
-      </div>
+            <div className="recipe-grid">
+              {recipes.map((recipe) => (
+                <RecipeCard key={recipe.id} recipe={recipe} />
+              ))}
+            </div>
 
-      {recipes.length > 0 && (
-        <div style={{display:'flex', justifyContent:'center', margin:24}}>
-          <button onClick={() => setPage(p => Math.max(0, p-1))} disabled={page===0} className="page-btn">Prev</button>
-          <span style={{padding:'8px 16px'}}>Page {page+1}</span>
-          <button onClick={() => setPage(p => p+1)} className="page-btn">Next</button>
-        </div>
-      )}
-    </div>
+            {!loading && hasMore && recipes.length > 0 && (
+              <button className="btn-load" onClick={loadMore}>
+                Load more recipes
+              </button>
+            )}
+          </div>
+        </section>
+      </main>
+    </>
   );
 }
 

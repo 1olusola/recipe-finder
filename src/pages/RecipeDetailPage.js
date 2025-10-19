@@ -1,95 +1,154 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { getRecipeDetail } from "../utils/api";
-import LoadingSpinner from "../components/LoadingSpinner";
-import ErrorMessage from "../components/ErrorMessage";
-import { FavoritesContext } from "../context/FavoritesContext";
+import { useFavorites } from "../context/FavoritesContext";
+import FavoriteButton from "../components/FavoriteButton";
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 import "./RecipeDetailPage.css";
 
-export default function RecipeDetailPage() {
+const RecipeDetailPage = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [err, setErr] = useState(null);
-  const { addFavorite, removeFavorite, isFavorite } = useContext(FavoritesContext);
+  const [relatedRecipes, setRelatedRecipes] = useState([]);
+  const { addFavorite, removeFavorite, isFavorite } = useFavorites();
 
   useEffect(() => {
-    let mounted = true;
-    const load = async () => {
-      setLoading(true); setErr(null);
+    const fetchData = async () => {
       try {
         const data = await getRecipeDetail(id);
-        if (mounted) setRecipe(data);
-      } catch (e) { if (mounted) setErr(e.message || "Failed to load recipe"); }
-      finally { if (mounted) setLoading(false); }
+        setRecipe(data);
+      } catch (error) {
+        console.error("Error fetching recipe:", error);
+      }
     };
-    load();
-    return () => { mounted = false; };
+    fetchData();
   }, [id]);
 
-  if (loading) return <LoadingSpinner />;
-  if (err) return <ErrorMessage message={err} onRetry={() => window.location.reload()} />;
-  if (!recipe) return <div style={{padding:24}}>Recipe not found</div>;
+  if (!recipe) {
+    return (
+      <div className="loading-container">
+        <p>Loading recipe details...</p>
+      </div>
+    );
+  }
 
-  const fav = isFavorite(recipe.id);
-  const toggleFav = () => {
-    if (fav) removeFavorite(recipe.id);
-    else addFavorite({
-      id: recipe.id,
-      title: recipe.title,
-      image: recipe.image || "/assets/placeholder.jpg",
-      summary: recipe.summary || ""
-    });
+  const handlePrint = () => window.print();
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: recipe.title,
+        text: "Check out this recipe!",
+        url: window.location.href,
+      });
+    } else {
+      alert("Sharing is not supported on this browser.");
+    }
   };
 
   return (
-    <div className="container recipe-detail">
-      <div className="detail-grid">
-        <div className="left">
-          <img src={recipe.image || "/assets/placeholder.jpg"} alt={recipe.title} className="hero-img" />
-          <h1>{recipe.title}</h1>
-          <div className="meta-row">
-            {recipe.readyInMinutes && <span>⏱ {recipe.readyInMinutes} mins</span>}
-            {recipe.servings && <span>• 🍽 {recipe.servings}</span>}
+    <div className="recipe-detail-page">
+      <main className="recipe-detail-container">
+        <div className="recipe-main">
+          <img
+            src={recipe.image || "https://source.unsplash.com/800x600/?food"}
+            alt={recipe.title}
+            className="recipe-detail-image"
+          />
+          <h1 className="recipe-title">{recipe.title}</h1>
+
+          <div className="recipe-meta">
+            <p>⏱ {recipe.readyInMinutes || 20} mins</p>
+            <p>🍽 Serves {recipe.servings || 2}</p>
+            <p>Difficulty: Easy</p>
           </div>
-          <section>
-            <h2>Ingredients</h2>
-            <ul className="ingredients">
-              {(recipe.extendedIngredients || recipe.ingredients || []).map((ing, idx) => (
-                <li key={idx}>{ing.original || ing.name}</li>
-              ))}
-            </ul>
-          </section>
-          <section>
-            <h2>Instructions</h2>
-            <div className="instructions" dangerouslySetInnerHTML={{ __html: recipe.instructions || recipe.summary || "<p>No instructions provided.</p>" }} />
-          </section>
+
+          <p className="recipe-summary">
+            {recipe.summary
+              ? recipe.summary.replace(/<[^>]*>/g, "")
+              : "A simple, delicious dish for everyday cooking."}
+          </p>
+
+          <span className="recipe-category">
+            {recipe.cuisines?.[0] || "General"}
+          </span>
         </div>
-        <aside className="right">
-          <div className="sidebar-card">
-            <h3>{recipe.title}</h3>
-            <div style={{display:'flex', gap:8, marginTop:12}}>
-              <button className="btn-primary" onClick={toggleFav}>{fav ? "Remove Favorite" : "Save to Favorites"}</button>
-              <a className="btn-secondary" href={`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noreferrer">Share</a>
-            </div>
-            <div style={{marginTop:16}}>
-              <strong>Nutrition</strong>
-              <div style={{marginTop:8}}>
-                {recipe.nutrition ? <div>{recipe.nutrition.nutrients.slice(0,4).map(n => <div key={n.name}>{n.name}: {n.amount}{n.unit}</div>)}</div> : <div>—</div>}
-              </div>
+
+        <aside className="recipe-aside">
+          <div className="recipe-actions shadow-box">
+            <h3>Recipe Actions</h3>
+            <div className="action-buttons">
+              <FavoriteButton recipe={recipe} />
+              <button className="print-btn" onClick={handlePrint}>
+                🖨 Print
+              </button>
+              <button className="share-btn" onClick={handleShare}>
+                📤 Share
+              </button>
             </div>
           </div>
-          <div style={{height:24}} />
-          <div>
-            <h4>Related Recipes</h4>
-            {/* Minimal: Recommend slice of mock or cached search */}
-            <div style={{display:'grid',gap:12,marginTop:8}}>
-              <Link to="/search">Browse similar recipes</Link>
+
+          <div className="nutrition shadow-box">
+            <h3>Nutrition (per serving)</h3>
+            <div className="nutrition-list">
+              <p>Calories: {recipe.nutrition?.nutrients?.[0]?.amount || 240} kcal</p>
+              <p>Protein: {recipe.nutrition?.nutrients?.[1]?.amount || 8} g</p>
+              <p>Carbs: {recipe.nutrition?.nutrients?.[2]?.amount || 32} g</p>
+              <p>Fat: {recipe.nutrition?.nutrients?.[3]?.amount || 6} g</p>
             </div>
+          </div>
+
+          <div className="shopping-list shadow-box">
+            <h3>Shopping List</h3>
+            <button className="shopping-btn">🛒 Add all to shopping list</button>
+          </div>
+
+          <div className="related shadow-box">
+            <h3>Related Recipes</h3>
+            {relatedRecipes.length > 0 ? (
+              relatedRecipes.map((item) => (
+                <div className="related-item" key={item.id}>
+                  <img
+                    src={item.image || "https://source.unsplash.com/300x200/?food"}
+                    alt={item.title}
+                  />
+                  <div>
+                    <h4>{item.title}</h4>
+                    <p>{item.readyInMinutes} mins • Easy</p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No related recipes available.</p>
+            )}
           </div>
         </aside>
-      </div>
+      </main>
+
+      <section className="ingredients-section">
+        <h2>Ingredients</h2>
+        <ul>
+          {recipe.extendedIngredients?.map((ing, i) => (
+            <li key={i}>{ing.original}</li>
+          )) || <li>No ingredients listed.</li>}
+        </ul>
+      </section>
+
+      <section className="instructions-section">
+        <h2>Instructions</h2>
+        <ol>
+          {recipe.analyzedInstructions?.[0]?.steps?.map((step, i) => (
+            <li key={i}>{step.step}</li>
+          )) || <li>No instructions available.</li>}
+        </ol>
+        <div className="chef-tip">
+          💡 Chef Tips: Use quality olive oil. Add chili flakes for a spicy kick.
+        </div>
+      </section>
     </div>
   );
-}
+};
+
+export default RecipeDetailPage;
 

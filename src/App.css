@@ -59,7 +59,6 @@ a {
 
 .main-content {
   flex: 1;
-  padding-top: 80px; /* offset header height */
 }
 
 /* Utility Container */
@@ -214,10 +213,6 @@ input:focus, select:focus, textarea:focus {
 }
 
 @media (max-width: 768px) {
-  .main-content {
-    padding-top: 56px; /* smaller header on mobile */
-  }
-
   .container {
     padding: 0 var(--sm);
   }

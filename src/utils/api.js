@@ -6,7 +6,6 @@ const BASE = "https://api.spoonacular.com/recipes";
 
 const axiosInstance = axios.create({ timeout: 10000 });
 
-// ✅ renamed helper (no “use” prefix)
 const mockFallback = (err) => {
   console.warn("Falling back to mock data due to API error:", err?.message || err);
   return mockData.results || [];
@@ -60,6 +59,25 @@ export const getRecipeDetail = async (id) => {
     const item = (mockData.results || []).find(r => String(r.id) === String(id));
     sessionStorage.setItem(cacheKey, JSON.stringify(item || null));
     return item || null;
+  }
+};
+
+
+export const getFeaturedRecipes = async () => {
+  const cache = sessionStorage.getItem("featuredRecipes");
+  if (cache) return JSON.parse(cache);
+
+  try {
+    const response = await fetch(
+      `https://api.spoonacular.com/recipes/random?number=6&apiKey=${process.env.REACT_APP_SPOONACULAR_KEY}`
+    );
+    const data = await response.json();
+    const recipes = data.recipes || [];
+    sessionStorage.setItem("featuredRecipes", JSON.stringify(recipes));
+    return recipes;
+  } catch (error) {
+    console.error("Error fetching featured recipes:", error);
+    return require("../data/mockRecipes.json");
   }
 };
 

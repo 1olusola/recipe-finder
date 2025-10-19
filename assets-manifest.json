@@ -1,0 +1,56 @@
+{
+  "pasta-3-ingredient.jpg": {
+    "alt": "3-ingredient pasta",
+    "category": "recipe",
+    "recommendedSize": "800x600",
+    "fallback": "https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642?w=800&q=80"
+  },
+  "spicy-tomato-stew.jpg": {
+    "alt": "Spicy tomato stew",
+    "category": "recipe",
+    "recommendedSize": "800x600",
+    "fallback": "https://images.unsplash.com/photo-1604908177522-1f3f4c9f5b0b?w=800&q=80"
+  },
+  "avocado-toast.jpg": {
+    "alt": "Avocado toast deluxe",
+    "category": "recipe",
+    "recommendedSize": "800x600",
+    "fallback": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800&q=80"
+  },
+  "chicken-stir-fry.jpg": {
+    "alt": "Chicken stir fry",
+    "category": "recipe",
+    "recommendedSize": "800x600",
+    "fallback": "https://images.unsplash.com/photo-1604908177523-2b2f6f3f8c6a?w=800&q=80"
+  },
+  "hero-plate.png": {
+    "alt": "Plate of food",
+    "category": "hero",
+    "recommendedSize": "1200x800",
+    "fallback": "https://images.unsplash.com/photo-1512058564366-c9e3b5bfb4b0?w=1200&q=80"
+  },
+  "boiling-pasta.jpg": {
+    "alt": "Boiling pasta",
+    "category": "instruction",
+    "recommendedSize": "800x600",
+    "fallback": "https://images.unsplash.com/photo-1512058564366-c9e3b5bfb4b0?w=800&q=80"
+  },
+  "logo-brand.svg": {
+    "alt": "Recipe Finder logo",
+    "category": "icon",
+    "recommendedSize": "SVG scalable",
+    "fallback": null
+  },
+  "icon-search.svg": {
+    "alt": "Search icon",
+    "category": "icon",
+    "recommendedSize": "SVG scalable",
+    "fallback": null
+  },
+  "icon-chevron.svg": {
+    "alt": "Chevron arrow",
+    "category": "icon",
+    "recommendedSize": "SVG scalable",
+    "fallback": null
+  }
+}

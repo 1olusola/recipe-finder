@@ -4,8 +4,9 @@ import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/SearchPage";
 import RecipeDetailPage from "./pages/RecipeDetailPage";
 import FavoritesPage from "./pages/FavoritesPage";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+
 
 function App() {
   return (
